@@ -1,0 +1,10 @@
+[package]
+name = "fruit-cards"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+members = [".", "api", "core", "entity", "migration"]
+
+[dependencies]
+fruit-cards-api = { path = "api" }
