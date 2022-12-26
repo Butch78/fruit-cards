@@ -77,7 +77,7 @@ pub async fn edit_post(
     let post: post::Model = PostQuery::find_post_by_id(&state.conn, id)
         .await
         .expect("could not find post")
-        .unwrap_or_else(|| panic!("could not find post with id {}", id));
+        .unwrap_or_else(|| panic!("could not find post with id {id}"));
 
     let mut ctx = tera::Context::new();
     ctx.insert("post", &post);
