@@ -8,7 +8,7 @@ publish = false
 [dependencies]
 fruit-cards-core = { path = "../core" }
 tokio = { version = "1.23.0", features = ["full"] }
-axum = "0.6.1"
+axum = {version = "0.6.1", features = ["macros", "headers"]} 
 tower = "0.4.13"
 tower-http = { version = "0.3.5", features = ["fs"] }
 tower-cookies = "0.8.0"
@@ -20,4 +20,3 @@ tera = "1.17.1"
 tracing-subscriber = { version = "0.3.16", features = ["env-filter"] }
 entity = { path = "../entity" }
 migration = { path = "../migration" }
-axum-macros = "0.3.0"

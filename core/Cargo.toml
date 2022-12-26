@@ -7,6 +7,8 @@ edition = "2021"
 
 [dependencies]
 entity = { path = "../entity" }
+axum = { version = "0.6.1", features = ["macros", "headers"] }
+tera = "1.17.1"
 
 [dependencies.sea-orm]
 version = "0.10.3" # sea-orm version
@@ -20,6 +22,7 @@ features = [
 
 [dev-dependencies]
 tokio = { version = "1.20.0", features = ["macros", "rt"] }
+
 
 [features]
 mock = ["sea-orm/mock"]

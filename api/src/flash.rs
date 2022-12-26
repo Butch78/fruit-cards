@@ -7,6 +7,11 @@ struct ValuedMessage<T> {
     #[serde(rename = "_")]
     value: T,
 }
+#[derive(Deserialize, Serialize, Debug, Clone)]
+pub struct FlashData {
+    pub kind: String,
+    pub message: String,
+}
 
 #[derive(Serialize)]
 struct ValuedMessageRef<'a, T> {

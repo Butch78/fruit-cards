@@ -1,40 +1,38 @@
 use sea_orm::entity::prelude::*;
-use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, PartialEq, EnumIter, DeriveActiveEnum)]
-#[sea_orm(rs_type = "String", db_type = "String(Some(1))")]
-pub enum Status {
-    #[sea_orm(rename = "A")]
-    Active,
-    #[sea_orm(rename = "I")]
-    Inactive,
-}
+// #[derive(Debug, Clone, PartialEq, EnumIter, DeriveActiveEnum)]
+// #[sea_orm(rs_type = "String", db_type = "String(Some(1))")]
+// pub enum Status {
+//     #[sea_orm(string_value = "A")]
+//     Active,
+//     #[sea_orm(string_value = "I")]
+//     Inactive,
+// }
 
-#[derive(Debug, Clone, PartialEq, EnumIter, DeriveActiveEnum)]
-#[sea_orm(rs_type = "String", db_type = "String(Some(1))")]
-pub enum difficulty {
-    #[sea_orm(rename = "E")]
-    Easy,
-    #[sea_orm(rename = "M")]
-    Medium,
-    #[sea_orm(rename = "H")]
-    Hard,
-}
+// #[derive(Debug, Clone, PartialEq, EnumIter, DeriveActiveEnum)]
+// #[sea_orm(rs_type = "String", db_type = "String(Some(1))")]
+// pub enum Difficulty {
+//     #[sea_orm(string_value = "E")]
+//     Easy,
+//     #[sea_orm(string_value = "M")]
+//     Medium,
+//     #[sea_orm(string_value = "H")]
+//     Hard,
+// }
 
-#[derive(Clone, Debug, PartialEq, Eq, DeriveEntityModel, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, DeriveEntityModel)]
 #[sea_orm(table_name = "cards")]
 pub struct Model {
     #[sea_orm(primary_key)]
-    #[serde(skip_deserializing)]
     pub id: i32,
-    pub title: String,
+    pub question: String,
     #[sea_orm(column_type = "Text")]
-    pub text: String,
-    pub status: Status,
-    pub status_option: Option<Status>,
+    pub answer: String,
+    //pub status: Status,
+    //pub status_option: Option<Status>,
     pub color: String,
-    pub difficulty: difficulty,
-    pub difficulty_option: Option<difficulty>,
+    pub difficulty: Difficulty,
+    // pub difficulty_option: Option<Difficulty>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
