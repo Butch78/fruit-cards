@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [workspace]
-members = [".", "api", "core", "entity", "migration"]
+members = [".", "api", "core", "entity", "migration", "index"]
 
 [dependencies]
 fruit-cards-api = { path = "api" }
