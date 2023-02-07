@@ -9,4 +9,5 @@ use tera::Tera;
 pub struct AppState {
     pub templates: Tera,
     pub conn: DatabaseConnection,
+    
 }

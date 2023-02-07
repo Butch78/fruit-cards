@@ -1,15 +1,16 @@
 use ::entity::{post, post::Entity as Post};
 use sea_orm::*;
 
+
 pub struct PostQuery;
 
 impl PostQuery {
-    pub async fn find_post_by_id(db: &DbConn, id: i32) -> Result<Option<post::Model>, DbErr> {
+    pub async fn find_by_id(db: &DbConn, id: i32) -> Result<Option<post::Model>, DbErr> {
         Post::find_by_id(id).one(db).await
     }
 
     /// If ok, returns (post models, num pages).
-    pub async fn find_posts_in_page(
+    pub async fn find_in_page(
         db: &DbConn,
         page: u64,
         posts_per_page: u64,
@@ -24,7 +25,7 @@ impl PostQuery {
         paginator.fetch_page(page - 1).await.map(|p| (p, num_pages))
     }
 
-    pub async fn create_post(
+    pub async fn create(
         db: &DbConn,
         form_data: post::Model,
     ) -> Result<post::ActiveModel, DbErr> {
@@ -37,7 +38,7 @@ impl PostQuery {
         .await
     }
 
-    pub async fn update_post_by_id(
+    pub async fn update_by_id(
         db: &DbConn,
         id: i32,
         form_data: post::Model,
@@ -57,7 +58,7 @@ impl PostQuery {
         .await
     }
 
-    pub async fn delete_post(db: &DbConn, id: i32) -> Result<DeleteResult, DbErr> {
+    pub async fn delete(db: &DbConn, id: i32) -> Result<DeleteResult, DbErr> {
         let post: post::ActiveModel = Post::find_by_id(id)
             .one(db)
             .await?

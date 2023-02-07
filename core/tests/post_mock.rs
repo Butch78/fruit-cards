@@ -1,7 +1,7 @@
 mod prepare;
 
 use entity::post;
-use fruit_cards_core::{Mutation, Query};
+use fruit_cards_core::{PostQuery};
 use prepare::prepare_mock_db;
 
 #[tokio::test]
@@ -9,19 +9,19 @@ async fn main() {
     let db = &prepare_mock_db();
 
     {
-        let post = Query::find_post_by_id(db, 1).await.unwrap().unwrap();
+        let post = PostQuery::find_by_id(db, 1).await.unwrap().unwrap();
 
         assert_eq!(post.id, 1);
     }
 
     {
-        let post = Query::find_post_by_id(db, 5).await.unwrap().unwrap();
+        let post = PostQuery::find_by_id(db, 5).await.unwrap().unwrap();
 
         assert_eq!(post.id, 5);
     }
 
     {
-        let post = Mutation::create_post(
+        let post = PostQuery::create(
             db,
             post::Model {
                 id: 0,
@@ -43,7 +43,7 @@ async fn main() {
     }
 
     {
-        let post = Mutation::update_post_by_id(
+        let post = PostQuery::update_by_id(
             db,
             1,
             post::Model {
@@ -66,13 +66,13 @@ async fn main() {
     }
 
     {
-        let result = Mutation::delete_post(db, 5).await.unwrap();
+        let result = PostQuery::delete(db, 5).await.unwrap();
 
         assert_eq!(result.rows_affected, 1);
     }
 
     {
-        let result = Mutation::delete_all_posts(db).await.unwrap();
+        let result = PostQuery::delete_all_posts(db).await.unwrap();
 
         assert_eq!(result.rows_affected, 5);
     }

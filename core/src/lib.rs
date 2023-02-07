@@ -1,9 +1,11 @@
-mod mutation;
-mod post;
-mod query;
 
-pub use mutation::*;
+mod post;
+mod card;
+// mod deck;
+
+
 pub use post::*;
-pub use query::*;
+pub use card::*;
+// pub use deck::*;
 
 pub use sea_orm;

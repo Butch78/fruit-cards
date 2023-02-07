@@ -4,9 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [workspace]
-members = [".", "api", "core", "entity", "migration", "index"]
+members = [".", "api", "core", "entity", "migration"]
 
 [dependencies]
 fruit-cards-api = { path = "api" }
 reqwest = "0.11.13"
 tokio = { version = "1.13.0", features = ["full"] }
+postgrest = "1.0"
+

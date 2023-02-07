@@ -17,9 +17,9 @@ pub async fn list_posts(
     cookies: Cookies,
 ) -> Result<Html<String>, (StatusCode, &'static str)> {
     let page = params.page.unwrap_or(1);
-    let posts_per_page = params.posts_per_page.unwrap_or(5);
+    let posts_per_page = params.models_per_page.unwrap_or(5);
 
-    let (posts, num_pages) = PostQuery::find_posts_in_page(&state.conn, page, posts_per_page)
+    let (posts, num_pages) = PostQuery::find_in_page(&state.conn, page, posts_per_page)
         .await
         .expect("Cannot find posts in page");
 
@@ -51,14 +51,14 @@ pub async fn new_post(state: State<AppState>) -> Result<Html<String>, (StatusCod
     Ok(Html(body))
 }
 
-pub async fn create_post(
+pub async fn create(
     state: State<AppState>,
     mut cookies: Cookies,
     form: Form<post::Model>,
 ) -> Result<PostResponse, (StatusCode, &'static str)> {
     let form = form.0;
 
-    PostQuery::create_post(&state.conn, form)
+    PostQuery::create(&state.conn, form)
         .await
         .expect("could not insert post");
 
@@ -74,7 +74,7 @@ pub async fn edit_post(
     state: State<AppState>,
     Path(id): Path<i32>,
 ) -> Result<Html<String>, (StatusCode, &'static str)> {
-    let post: post::Model = PostQuery::find_post_by_id(&state.conn, id)
+    let post: post::Model = PostQuery::find_by_id(&state.conn, id)
         .await
         .expect("could not find post")
         .unwrap_or_else(|| panic!("could not find post with id {id}"));
@@ -98,7 +98,7 @@ pub async fn update_post(
 ) -> Result<PostResponse, (StatusCode, String)> {
     let form = form.0;
 
-    PostQuery::update_post_by_id(&state.conn, id, form)
+    PostQuery::update_by_id(&state.conn, id, form)
         .await
         .expect("could not edit post");
 
@@ -115,7 +115,7 @@ pub async fn delete_post(
     Path(id): Path<i32>,
     mut cookies: Cookies,
 ) -> Result<PostResponse, (StatusCode, &'static str)> {
-    PostQuery::delete_post(&state.conn, id)
+    PostQuery::delete(&state.conn, id)
         .await
         .expect("could not delete post");
 

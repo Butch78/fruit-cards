@@ -45,7 +45,11 @@ pub async fn start() -> anyhow::Result<()> {
 }
 
 pub fn main() {
+    
+    println!("Server starting...");
     let result = start();
+
+
 
     if let Some(err) = result.err() {
         println!("Error: {err}");
