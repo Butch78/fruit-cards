@@ -25,6 +25,7 @@ pub struct Card {
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CreateDeck {
+    pub user_id: i32,
     pub name: String,
     pub description: String,
 }
@@ -32,6 +33,7 @@ pub struct CreateDeck {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Deck {
     pub id: i32,
+    pub user_id: i32,
     pub created_at: String,
     pub name: String,
     pub description: String,
@@ -43,12 +45,28 @@ pub fn created_at() -> String {
     Utc::now().to_string()
 }
 
+pub async fn edit_deck(
+    Path(id): Path<i32>,
+) -> Result<impl IntoResponse, (StatusCode, &'static str)> {
+    println!("deck: {:?}", id);
+    Ok(Json(Deck {
+        id: 1,
+        user_id: 1,
+        created_at: created_at(),
+        name: "Software Systems".to_string(),
+        description: "A Deck for Software System".to_string(),
+        state: "Fresh".to_string(),
+        cards: vec![],
+    }))
+}
+
 pub async fn create_deck(
     Json(input): Json<CreateDeck>,
 ) -> Result<impl IntoResponse, (StatusCode, &'static str)> {
     println!("deck: {:?}", input);
     let deck = Deck {
         id: 1,
+        user_id: input.user_id,
         created_at: created_at(),
         name: input.name,
         description: input.description,
@@ -84,6 +102,7 @@ pub async fn list_decks(
 
     let deck = Deck {
         id: 1,
+        user_id: 1,
         created_at: created_at(),
         name: "Software Systems".to_string(),
         description: "test".to_string(),
@@ -93,6 +112,7 @@ pub async fn list_decks(
 
     let deck_2 = Deck {
         id: 2,
+        user_id: 1,
         created_at: created_at(),
         name: "FSS01_02_TowardsScalableNoSQL".to_string(),
         description: "test".to_string(),
